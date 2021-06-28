@@ -1,5 +1,10 @@
 package com.lukinhasssss.casa_do_codigo.controllers;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+import com.lukinhasssss.casa_do_codigo.dto.author.AuthorDto;
+import com.lukinhasssss.casa_do_codigo.dto.author.InsertAuthor;
 import com.lukinhasssss.casa_do_codigo.entities.Author;
 import com.lukinhasssss.casa_do_codigo.repositories.AuthorRepository;
 
@@ -13,16 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/authors")
 public class AuthorController {
 
-    AuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
 
-    private AuthorController(AuthorRepository authorRepository) {
+    public AuthorController(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
     @PostMapping
-    public ResponseEntity<Author> insert(@RequestBody Author author) {
-        Author insertAuthor = authorRepository.save(author);
-        return ResponseEntity.ok().body(insertAuthor);
+    @Transactional
+    public ResponseEntity<AuthorDto> insert(@RequestBody @Valid InsertAuthor authorDto) {
+        Author author = authorDto.convert();
+        authorRepository.save(author);
+        return ResponseEntity.ok().body(new AuthorDto(author));
     }
 
 }
