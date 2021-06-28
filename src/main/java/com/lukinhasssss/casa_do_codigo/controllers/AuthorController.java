@@ -3,12 +3,16 @@ package com.lukinhasssss.casa_do_codigo.controllers;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import com.lukinhasssss.casa_do_codigo.config.validation.AuthorFormEmailValidator;
 import com.lukinhasssss.casa_do_codigo.dto.author.AuthorDto;
 import com.lukinhasssss.casa_do_codigo.dto.author.AuthorForm;
 import com.lukinhasssss.casa_do_codigo.entities.Author;
 import com.lukinhasssss.casa_do_codigo.repositories.AuthorRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/authors")
 public class AuthorController {
 
+    @Autowired
     private AuthorRepository authorRepository;
 
-    public AuthorController(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
+    @Autowired
+    private AuthorFormEmailValidator authorFormEmailValidator;
+
+    @InitBinder
+	public void init(WebDataBinder binder) {
+		binder.addValidators(authorFormEmailValidator);
+	}
 
     @PostMapping
     @Transactional

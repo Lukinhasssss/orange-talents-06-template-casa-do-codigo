@@ -22,6 +22,8 @@ public class Author {
     private String description;
     private Instant registeredAt = Instant.now();
 
+    public Author() {}
+
     public Author(String name, String email, String description) {
         this.name = name;
         this.email = email;
