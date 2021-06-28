@@ -4,7 +4,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import com.lukinhasssss.casa_do_codigo.dto.author.AuthorDto;
-import com.lukinhasssss.casa_do_codigo.dto.author.InsertAuthor;
+import com.lukinhasssss.casa_do_codigo.dto.author.AuthorForm;
 import com.lukinhasssss.casa_do_codigo.entities.Author;
 import com.lukinhasssss.casa_do_codigo.repositories.AuthorRepository;
 
@@ -26,8 +26,8 @@ public class AuthorController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<AuthorDto> insert(@RequestBody @Valid InsertAuthor authorDto) {
-        Author author = authorDto.convert();
+    public ResponseEntity<AuthorDto> insert(@RequestBody @Valid AuthorForm form) {
+        Author author = form.convertToEntity();
         authorRepository.save(author);
         return ResponseEntity.ok().body(new AuthorDto(author));
     }

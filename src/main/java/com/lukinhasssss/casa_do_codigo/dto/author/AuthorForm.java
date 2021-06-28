@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 import com.lukinhasssss.casa_do_codigo.entities.Author;
 
-public class InsertAuthor {
+public class AuthorForm {
 
     @NotBlank @NotEmpty
     private String name;
@@ -18,7 +18,7 @@ public class InsertAuthor {
     @Size(max = 400)
     private String description;
 
-    public InsertAuthor(String name, String email, String description) {
+    public AuthorForm(String name, String email, String description) {
         this.name = name;
         this.email = email;
         this.description = description;
@@ -36,7 +36,7 @@ public class InsertAuthor {
         return description;
     }
 
-    public Author convert() {
+    public Author convertToEntity() {
         return new Author(name, email, description);
     }
 
