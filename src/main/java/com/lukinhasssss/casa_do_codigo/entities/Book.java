@@ -43,6 +43,9 @@ public class Book {
     @OneToOne @NotNull
     private Author author;
 
+    @Deprecated
+    public Book() {}
+
     public Book(String title, String resume, String sumary, Double price, Integer pages, String isbn, LocalDate publicationDate, Category category, Author author) {
         this.title = title;
         this.resume = resume;
