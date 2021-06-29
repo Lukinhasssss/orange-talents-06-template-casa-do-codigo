@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.lukinhasssss.casa_do_codigo.config.validation.UniqueValue;
 import com.lukinhasssss.casa_do_codigo.entities.Author;
 
 public class AuthorForm {
@@ -13,6 +14,7 @@ public class AuthorForm {
     private String name;
 
     @Email @NotBlank @NotEmpty
+    @UniqueValue(domainClass = Author.class, fieldName = "email", message = "Este email já existe")
     private String email;
 
     @Size(max = 400)
